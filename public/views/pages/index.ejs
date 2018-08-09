@@ -25,6 +25,9 @@
       background-color: #008CBA;
       color: white;
     }
+    img {
+      max-width: 450px;
+    }
   </style>
   <body>
     <div align='center'>
@@ -32,7 +35,7 @@
         <% if (!result) { %>
           <tr>
             <td align='left'>
-              <form action='#' method='GET'>
+              <form action='/' method='GET'>
                 <input type='text' name='img' style='display: none' value='1'>
                 <input type='submit' class='btn' value='Home'/>
               </form>
@@ -49,7 +52,7 @@
         %>
         <tr>
             <td align='left'>
-              <form action='#' method='GET'>
+              <form action='/' method='GET'>
                 <input type='text' name='img' style='display: none' value='1'>
                 <input type='submit' class='btn' value='Home'/>
               </form>
@@ -70,15 +73,12 @@
           </td>
           <td>
             <img border='2' src='src/<%=img%>b.png'>
+            <% if (result) { %>
+              <img border='2' src='public/diff.png'>
+          <% } %>
           </td>
         </tr>
-        <% if (result) { %>
-          <tr>
-            <td align='center' colspan='2'>
-                <img border='2' src='public/diff.png'>
-            </td>
-          </tr>
-      <% } %>
+        
       </table>
     </div>
   </body>
