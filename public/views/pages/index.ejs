@@ -2,17 +2,84 @@
   <head>
     <title>Test</title>
   </head>
+  <style>
+    body {
+      background-color: white;
+    }
+    .btn {
+      color: #0099CC; 
+      background: transparent; 
+      border-radius: 6px; 
+      padding: 16px 32px;
+      text-align: center;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .btn:hover {
+      background-color: #008CBA;
+      color: white;
+    }
+  </style>
   <body>
     <div align='center'>
-      <img border='2' src='src/<%=img%>a.png'>
-      <img border='2' src='src/<%=img%>b.png'>
-      <% if (result) { %>
-          <br><img border='2' src='public/diff.png'>
+      <table>
+        <% if (!result) { %>
+          <tr>
+            <td align='left'>
+              <form action='#' method='GET'>
+                <input type='text' name='img' style='display: none' value='1'>
+                <input type='submit' class='btn' value='Home'/>
+              </form>
+            </td>
+            <td align='right'>
+              <form action='#' method='POST'>
+                <input type='text' name='img' style='display: none' value='<%=img%>'>
+                <input type='submit' class='btn' value='Compare'/>
+              </form>
+            </td>
+          </tr>
+        <% } else { 
+          const img2 = Number(img) + 1;  
+        %>
+        <tr>
+            <td align='left'>
+              <form action='#' method='GET'>
+                <input type='text' name='img' style='display: none' value='1'>
+                <input type='submit' class='btn' value='Home'/>
+              </form>
+            </td>
+            <% if (img < 4) { %>
+              <td align='right'>
+                <form action='#' method='GET'>
+                  <input type='text' name='img' style='display: none' value='<%=img2%>'>
+                  <input type='submit' class='btn' value='Next'/>
+                </form>
+              </td>
+            <% } %>
+          </tr>
+        <% } %>
+        <tr>
+          <td align='center'>
+            <img border='2' src='src/<%=img%>a.png'>
+          </td>
+          <td>
+            <img border='2' src='src/<%=img%>b.png'>
+          </td>
+        </tr>
+        <% if (result) { %>
+          <tr>
+            <td align='center' colspan='2'>
+                <img border='2' src='public/diff.png'>
+            </td>
+          </tr>
       <% } %>
+      </table>
     </div>
-    <form action='#' method='POST'>
-      <input type='text' name='img' style='display: none' value='<%=img%>'>
-      <input type='submit' />
-    </form>
   </body>
 </html>
