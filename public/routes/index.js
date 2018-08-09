@@ -6,7 +6,7 @@ const url = require('url');
 module.exports = function(app) {
  app.get('/', function(req, res) {
     const url_parts = url.parse(req.url,true);
-    const img = url_parts.query.img;
+    const img = url_parts.query.img || 1;
 
     res.render('pages/index', {img: img, result: null});
  });
