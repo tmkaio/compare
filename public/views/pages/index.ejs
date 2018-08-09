@@ -6,13 +6,9 @@
     <div align='center'>
       <img border='2' src='src/<%=img%>a.png'>
       <img border='2' src='src/<%=img%>b.png'>
-      <%
-        if (result) { 
-      %>
+      <% if (result) { %>
           <br><img border='2' src='public/diff.png'>
-      <%
-        }
-      %>
+      <% } %>
     </div>
     <form action='#' method='POST'>
       <input type='text' name='img' style='display: none' value='<%=img%>'>
