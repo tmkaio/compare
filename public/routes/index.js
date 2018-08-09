@@ -8,13 +8,12 @@ module.exports = function(app) {
     const url_parts = url.parse(req.url,true);
     const img = url_parts.query.img;
 
-    res.render('pages/index', {img: img});
+    res.render('pages/index', {img: img, result: null});
  });
- app.post('/test', function(req, res) {
-    const pictureOneUrl = 'src/' + req.body.img + 'a.png';
-    const pictureTwoUrl = 'src/' + req.body.img + 'b.png';
-    console.log('pic1', pictureOneUrl);
-    console.log('pic2', pictureTwoUrl);
+ app.post('/', function(req, res) {
+    const img = req.body.img;
+    const pictureOneUrl = 'src/' + img + 'a.png';
+    const pictureTwoUrl = 'src/' + img + 'b.png';
     let filesRead = 0;
     const doneReading = () => {
         if (++filesRead < 2) return;
@@ -25,8 +24,8 @@ module.exports = function(app) {
         diff.pack().pipe(fs.createWriteStream('diff.png'));
 
         setTimeout(() => {
-            res.render('pages/result');
-        }, 2 * 1000);
+            res.render('pages/index', {img: img, result: 'diff.png'});
+        }, 1 * 1000);
         
     }
     const img1 = fs.createReadStream(pictureOneUrl).pipe(new PNG()).on('parsed', doneReading);

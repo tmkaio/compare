@@ -3,10 +3,16 @@
     <title>Test</title>
   </head>
   <body>
-    <img src='src/<%=img%>a.png'>
-    <img src='src/<%=img%>b.png'>
-
-    <form action='test' method='POST'>
+    <img border='2' src='src/<%=img%>a.png'>
+    <img border='2' src='src/<%=img%>b.png'>
+    <%
+      if (result) { 
+    %>
+        <img border='2' src='public/diff.png'>
+    <%
+      }
+    %>
+    <form action='#' method='POST'>
       <input type='text' name='img' style='display: none' value='<%=img%>'>
       <input type='submit' />
     </form>
