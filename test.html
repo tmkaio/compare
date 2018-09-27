@@ -1,0 +1,96 @@
+<html>
+    <script>
+        let found = false;
+        let counter = 0;
+        const datesFound = [];
+
+        const makeRequest = (method, token, from, destination, date, done) => {
+            console.log('1');
+            const url = `https://wftc1.e-travel.com/plnext/AviancaBRaward/FlexPricerAvailabilityDispatcherPui.action;jsessionid=${token}?ENCT=1&TRAVELLER_TYPE_1=ADT&SITE=A005A005&COUNTRY_SITE=GB&DISPLAY_TYPE=2&SOURCE=DESKTOP_STAR&CATEGORY=STAR&SITE2=AviancaBR&TRIP_FLOW=YES&FIELD_ADT_NUMBER=1&EXTERNAL_ID=SAO&TRIP_TYPE=O&PRICING_TYPE=C&COMMERCIAL_FARE_FAMILY_1=YSTAR&LANGUAGE=BR&ARRANGE_BY=NDE&pe_variable3=International&FLX_DATES=true&B_LOCATION_1=${from}&E_LOCATION_1=${destination}&B_DATE_1=${date}0000`;
+            console.log(url);
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.onload = function () {
+                done(null, xhr.response);
+            };
+            xhr.onerror = function () {
+                done(xhr.responseText);
+            };
+            xhr.send();
+        }
+
+        const getDates = (startDate, endDate) => {
+            const dates = [];
+            let currentDate = startDate;
+            
+            const addDays = function(days) {
+                    var date = new Date(this.valueOf());
+                    date.setDate(date.getDate() + days);
+                    return date;
+                };
+            while (currentDate <= endDate) {
+                dates.push(currentDate);
+                currentDate = addDays.call(currentDate, 1);
+            }
+            return dates;
+        };
+
+        const getPrereqs = () => {
+            console.log('fisrt');
+            const from = document.getElementById('fromAirport').value;
+            const destination = document.getElementById('toAirport').value;
+            const initialDate = document.getElementById('fromDate').value;
+            const finalDate = document.getElementById('toDate').value;
+            const token = '-_kb8161OVY2sqt41cIG-eK62z1S5TrxA2yjtnO3-jDoabL-G5Ur!-164184411!1076578462';
+            const date = '20181110';
+            
+            const dates = getDates(new Date(initialDate), new Date(finalDate));
+            dates.forEach(function(date) {
+                newDate = String(date);
+                newDate = newDate.split(' ');
+                var Months = {
+                    Jan: "01",
+                    Feb: "02",
+                    Mar: "03",
+                    Apr: "04",
+                    May: "05",
+                    Jun: "06",
+                    Jul: "07",
+                    Aug: "08",
+                    Sep: "09",
+                    Oct: "10",
+                    Nov: "11",
+                    Dec: "12"
+                };
+
+            var newMonth = Months[newDate[1]];
+                console.log(newDate[3] + newMonth + newDate[2]);
+            });
+            
+
+            /*makeRequest('GET', token, from, destination, date, function (err, response) {
+                if (err) { throw err; }
+                
+                if (response.includes('Selecione seu(s) voo(s) de acordo com a menor tarifa em pontos apresentada abaixo')) {
+                    console.log('achei');
+                } else if (response.includes('Desculpe, sua sessão expirou.')) {
+                    console.log('sessao expirada');
+                } else {
+                    console.log('nao achei')
+                }
+            });*/
+        }
+
+    </script>
+    <body>
+        <form id='' action="#">
+            CPF: <input type='text' id='cpf'>
+            Senha: <input type='password' id='senha'>
+            Aeroporto de origem: <input type='text' id='fromAirport'>
+            Aeroporto de destino: <input type='text' id='toAirport'>
+            Data inicial: <input type='text' id='fromDate'>
+            Data final <input type='text' id='toDate'>
+            <button onclick='getPrereqs()'>Procurar</button>
+        </form>
+    </body>
+</html>
